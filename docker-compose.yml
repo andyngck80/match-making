@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  match-making-backend:
+    build:
+      context: match-making-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    restart: always
+    networks:
+      - backend
+      - frontend
+
+  match-making-web:
+    build:
+      context: match-making-web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    restart: always
+    depends_on:
+      - match-making-backend
+    networks:
+      - frontend
+
+volumes:
+  db-data:
+
+networks:
+  backend:
+  frontend:
